@@ -38,6 +38,13 @@
             text-shadow: 0 0 5px rgba(0, 51, 102, 0.8);
         }
 
+        /* -------------- SCORE BOARD STYLES -------------- */
+        #scoreBoard {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
         /* -------------- GAME CANVAS STYLES -------------- */
         #gameCanvas {
             background-color: #000; /* pitch black for contrast */
@@ -94,6 +101,9 @@
     <div id="container">
         <!-- Live Date/Time -->
         <div id="datetime">Loading date/time...</div>
+
+        <!-- Score Board -->
+        <div id="scoreBoard">Score: <span id="score">0</span></div>
 
         <!-- Asteroids Game Canvas -->
         <canvas id="gameCanvas" width="600" height="400"></canvas>
@@ -171,6 +181,10 @@
             const KEY_SPACE = 32;
 
             let keys = {};
+
+            // --- SCORE SYSTEM ---
+            let score = 0;
+            const scoreEl = document.getElementById('score');
 
             // --- UTILITY: POINT DISTANCE ---
             function distBetweenPoints(x1, y1, x2, y2) {
@@ -347,6 +361,8 @@
                             // hit: remove both
                             ship.lasers.splice(j, 1);
                             asteroids.splice(i, 1);
+                            score += 100;
+                            scoreEl.textContent = score;
                             break;
                         }
                     }
@@ -362,6 +378,8 @@
                         ship.thrust.x = 0;
                         ship.thrust.y = 0;
                         ship.angle = 0;
+                        score = 0;
+                        scoreEl.textContent = score;
                         break;
                     }
                 }
